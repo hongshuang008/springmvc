@@ -12,11 +12,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.dreamchain.skeleton.base.BaseController;
 import com.dreamchain.skeleton.service.UserService;
 
 @Controller
 @RequestMapping(UserController.URL)
-public class UserController {
+public class UserController  extends BaseController{
 
 	static final String URL = "/user";
 	

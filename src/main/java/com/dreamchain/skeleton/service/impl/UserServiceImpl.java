@@ -17,7 +17,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Transactional(readOnly = true)
 	public User get(Long id) {
-		return userDao.get(id);
+		return userDao.findById(id);
 	}
 
 	@Transactional

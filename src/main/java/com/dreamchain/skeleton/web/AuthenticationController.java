@@ -8,6 +8,7 @@ public class AuthenticationController {
 	
 	@RequestMapping("/login")
 	public void login() {
+		System.out.println("login");
 		
 	}
 

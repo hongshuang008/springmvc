@@ -5,5 +5,6 @@
 <hibernate-configuration>
 	<session-factory>
 		<mapping class="com.dreamchain.skeleton.model.User"></mapping>
+		<mapping class="com.dreamchain.skeleton.model.PMIData"></mapping>
 	</session-factory>
-</hibernate-configuration>
+</hibernate-configuration> 

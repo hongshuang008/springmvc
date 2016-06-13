@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
+<beans default-autowire="byName" 
+	xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:tx="http://www.springframework.org/schema/tx"
@@ -8,32 +9,70 @@
 		http://www.springframework.org/schema/context
 		http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/tx
-		http://www.springframework.org/schema/tx/spring-tx.xsd">
+		http://www.springframework.org/schema/tx/spring-tx.xsd"
+		>
 
-	<bean id="myDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	<!-- <bean id="myDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="org.h2.Driver" />
 		<property name="url" value="${db.url}" />
-	</bean>
+	</bean> -->
+	<!-- 配置数据源 -->
+    <bean id="myDataSource"  class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass" value="com.mysql.jdbc.Driver" />
+        <property name="jdbcUrl">
+            <value><![CDATA[jdbc:mysql://${db.host}:${db.port}/${db.database}?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true]]></value>
+        </property>
+        <property name="user"               value="${db.userName}" />
+        <property name="password"           value="${db.password}" />
+        <property name="maxPoolSize"        value="12" />
+        <property name="minPoolSize"        value="0" />
+        <property name="maxStatements"      value="10" />
+        <property name="initialPoolSize"    value="3" />
+        <property name="maxIdleTime"        value="10"/>
+        <property name="idleConnectionTestPeriod"   value="10" />
+        <property name="testConnectionOnCheckin"    value="true" />
+        <property name="testConnectionOnCheckout"   value="false" />
+        <property name="preferredTestQuery"         value="SELECT 1 FROM DUAL" />
+    </bean>
 	
-	<bean id="mySessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="myDataSource" />
-		<property name="configLocation" value="classpath:hibernate.cfg.xml" />
 		<property name="namingStrategy" ref="namingStrategy" />
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.show_sql">false</prop>
-				<prop key="hibernate.hbm2ddl.auto">create</prop>
-				<prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+					
 			</props>
 		</property>
+		<!-- 使用hibernate的配置文件配置session-factory	
+	   <property name="configLocation" value="classpath:hibernate.cfg.xml" /> -->
+		<!--指明使用标注的实体类
+	   <property name="annotatedClasses">
+	     <list>
+	       <value>com.dreamchain.skeleton.model.User</value>
+	       <value>com.dreamchain.skeleton.model.PMIData</value>
+	     </list>
+	   </property>-->
+		<!--当然也可以不使用上面这种指定的方式，而使用包（只需指定包名）扫描的方式做为替换，推荐这种-->
+		<property name="packagesToScan">
+	       <list>
+	            <value>com.dreamchain.skeleton.model</value>
+	        </list>
+	     </property>
 	</bean>
-
+<!-- 支持tx(事务@Transactional)注解 -->
 	<tx:annotation-driven />
-
-	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-		<property name="sessionFactory" ref="mySessionFactory" />
+	
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate4.HibernateTemplate">         
+		<property name="sessionFactory" ref="sessionFactory"></property> 
 	</bean>
-
+	
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
 	<bean id="namingStrategy" class="org.hibernate.cfg.ImprovedNamingStrategy"/>
 	
 </beans>

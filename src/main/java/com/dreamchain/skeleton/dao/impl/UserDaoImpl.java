@@ -15,7 +15,7 @@ public class UserDaoImpl implements UserDao {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	public User get(Long id) {
+	public User findById(Long id) {
 		return (User) sessionFactory.getCurrentSession().get(User.class, id);
 	}
 

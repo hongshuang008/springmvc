@@ -1,14 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context
-		http://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-	<context:property-placeholder location="classpath:test-config.properties" />
+	<!-- 加载配置文件 (在代码中通过注解直接使用)-->
+	<!-- <util:properties id="propertiesReader" location="classpath:weixin.properties" />  -->
+	<bean id="propertiesReader"
+	class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="locations">
+			<list>
+				<value>classpath:common.properties</value>
+			</list>
+		</property>
+	</bean> 
+	<!-- 加载配置文件 (在配置文件中使用)-->
+	<!-- <context:property-placeholder location="classpath:config.properties" /> -->
+    <bean id="propertyConfigurer"
+        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:config.properties</value>
+            </list>
+        </property>
+    </bean>
 	
-	<import resource="classpath:spring/*.xml" />
-
+	<import resource="classpath:spring/*.xml"/>
+	
 </beans>
