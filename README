@@ -1,3 +1,5 @@
+springMVC + hibernate + Maven + security + logback + slf4j
+
 This is a clean Spring MVC application skeleton with Hibernate persistence. I'm building with Maven and I'm doing functional testing with WebDriver.
 
 1. Run the Selenium tests (you will need to have Firefox installed):
