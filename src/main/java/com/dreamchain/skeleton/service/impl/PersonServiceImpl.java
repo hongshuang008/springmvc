@@ -56,6 +56,7 @@ public class PersonServiceImpl extends BaseService<Person,Long>{
 		if(!person.getPassword().equals(password)){
 			throw new Exception("账号或密码错误");
 		}
+		
 		Map result = new HashMap<String, Object>();
 		result.put("nickname", person.getNickname());
 		result.put("head_portrait", person.getHead_portrait());

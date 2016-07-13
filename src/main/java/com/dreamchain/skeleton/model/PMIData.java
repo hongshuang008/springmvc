@@ -27,10 +27,8 @@ public class PMIData implements Serializable {
 	@NotNull
 	private long phone;
 	
-	@NotEmpty
 	private String province;
 
-	@NotEmpty
 	private String city;
 	
 	private String district;

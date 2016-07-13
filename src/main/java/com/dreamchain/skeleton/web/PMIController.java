@@ -26,8 +26,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.dreamchain.skeleton.base.BaseController;
+import com.dreamchain.skeleton.bean.PMIDataBean;
 import com.dreamchain.skeleton.model.AndroidAPPVersion;
 import com.dreamchain.skeleton.model.DeviceVersion;
 import com.dreamchain.skeleton.model.Friend;
@@ -214,7 +216,21 @@ public class PMIController extends BaseController{
 	public Map<String, Object> login(long phone,String password) {
 		Map<String,Object> modelMap = new HashMap<String, Object>();
 		try{	
+			
 			Map result = personService.login(phone,password);
+			
+			Map param = new HashMap<String, Object>();
+			param.put("phone", phone);
+			param.put("order", "id");
+			param.put("limit", 1);
+			List h = pMIService.getHistoryPMIData(param);
+			if(h.isEmpty()){
+				result.put("createTime", "");
+			}else{
+				HashMap<String, Object> p =  (HashMap<String, Object>) h.get(0);
+				result.put("createTime", p.get("createTime"));
+			}
+			
 			modelMap.put("result","ok");
 			modelMap.put("data",result);
 			
@@ -475,6 +491,33 @@ public class PMIController extends BaseController{
 	@RequestMapping("/download")
 	public String download() {
 		return "download";
+	}
+	/**
+	 * 分享页面
+	 * @return
+	 */
+	@RequestMapping("/pmiShare")
+	public String pmiShare(PMIDataBean data, Map model) {
+		if(null!= data.getPm2_5()){
+			Long pm2_5= Long.parseLong(data.getPm2_5());
+			if(pm2_5 <= 75){
+				model.put("level","good");
+				model.put("levelText","优");
+			}
+			if(75 < pm2_5 && pm2_5 <= 150){
+				model.put("level","normal");
+				model.put("levelText","良");
+			}
+			if(150 < pm2_5){
+				model.put("level","bad");
+				model.put("levelText","差");
+			}
+			
+			
+		}
+		
+		model.put("PMIDataBean",data); 
+		return "pmiShare";
 	}
 	
 }

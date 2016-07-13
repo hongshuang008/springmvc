@@ -98,6 +98,22 @@
 			<button type="submit">提交保存</button>
 		</form>
 		<br/>
+		<h3>分享pim数据</h3>
+		<form action="<c:url value='/PMI/pmiShare' />" method="get">
+			<input name ="phone" value="13267957035" />
+			<input name ="province" value="广东省"/>
+			<input name ="city" value="深圳市"/>
+			<input name ="district" value="宝安"/>
+			<input name ="temp" value="25"/>
+			<input name ="humidity" value="6"/>
+			<input name ="pm1" value="5"/>
+			<input name ="pm2_5" value="4"/>
+			<input name ="pm10" value="3"/>
+			<input name ="voc" value="2"/>
+			<input name ="createTime" value="2016-05-26 17:25:00"/>
+			<button type="submit">提交保存</button>
+		</form>
+		<br/>
 		<br/>
 		<h3>用户注册DEMO</h3>
 		<form action="<c:url value='/PMI/register' />" method="post" >

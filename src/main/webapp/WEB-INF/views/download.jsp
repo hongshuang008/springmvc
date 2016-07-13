@@ -60,7 +60,7 @@ margin:0 auto;
 	.downFr p{ color:#333}
 .copyright{ text-align:center; height:40px; margin-top:50px; color:#fff; font-family:arial,"微软雅黑"; font-size:16px;}
 </style>
-<script type="text/javascript">  
+<script type="text/javascript">
 function fBrowserRedirect(){  
     var sUserAgent = navigator.userAgent.toLowerCase();  
     var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";    
@@ -70,7 +70,10 @@ function fBrowserRedirect(){
     var bIsUc = sUserAgent.match(/ucweb/i) == "ucweb";  
     var bIsAndroid = sUserAgent.match(/android/i) == "android";  
     var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";  
-    var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";  
+    var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
+    var bIsWeiXin = sUserAgent.match(/MicroMessenger/i) == "micromessenger";
+    
+    
     if(bIsIpad || bIsIphoneOs){//ipad or iphone
     	hideAll();
 		document.getElementById('iosDown').style.display="";
@@ -82,7 +85,10 @@ function fBrowserRedirect(){
     else{//other
     	hideAll();
 		document.getElementById('pcDown').style.display="";
-    }  
+    } 
+    if(bIsWeiXin){
+    	alert("请点击右上角，通过浏览器打开");
+    }
 }
 
 function hideAll(){
@@ -100,12 +106,12 @@ function hideAll(){
 <div class="titles" >欧西亚  欧爱尔手机客户端</div>
 <div class="downFr" id="pcDown">
    <div style="margin-top:10%!important;">
-   	<!-- <a href="itms-services://?action=download-manifest&url=http://192.168.11.185/app/ios/GreeDevelopment.ipa" data-role="button">最新iPhone版下载地址</a> -->
-   	<a href="https://itunes.apple.com/cn/app/weather+-by-oregon-scientific/id1054327373?mt=8" data-role="button">最新iPhone版下载</a>
+   	<!-- <a href="https://itunes.apple.com/cn/app/weather+-by-oregon-scientific/id1054327373?mt=8" data-role="button">最新iPhone版下载</a> -->
+   	<a  onclick="alert('正在努力上传，请耐心等候')" href="javascript:;" data-role="button">最新iPhone版下载</a>
    </div>
    <div style="margin-top:5%!important;">
    	<!-- <a href="version-mobile!getNewApp.do?type=0&appKind=saleApp" data-role="button">最新Android版下载地址</a> -->
-   	<a href="<%=path %>/AppDownload/DownloadDemo.apk" data-role="button">最新Android版下载</a>
+   	<a href="<%=path %>/AppDownload/PMI.apk" data-role="button">最新Android版下载</a>
    </div>
 </div>
 
@@ -113,15 +119,15 @@ function hideAll(){
 <div class="downFr" id="androidDown">
    <div style="margin-top:40%!important;">
    	<!-- <a href="version-mobile!getNewApp.do?type=0&appKind=saleApp" data-role="button">最新Android版下载地址</a> -->
-   	<a href="<%=path %>/AppDownload/DownloadDemo.apk" data-role="button">最新Android版下载</a>
+   	<a href="<%=path %>/AppDownload/PMI.apk" data-role="button">最新Android版下载</a>
    </div>
 </div>
 
 
 <div class="downFr" id="iosDown">
    <div style="margin-top:40%!important;">
-   	<!-- <a href="itms-services://?action=download-manifest&url=http://192.168.11.185/app/ios/GreeDevelopment.ipa" data-role="button">最新iPhone版下载地址</a> -->
-   	<a href="https://itunes.apple.com/cn/app/weather+-by-oregon-scientific/id1054327373?mt=8" data-role="button">最新iPhone版下载</a>
+   	<!-- <a href="https://itunes.apple.com/cn/app/weather+-by-oregon-scientific/id1054327373?mt=8" data-role="button">最新iPhone版下载</a> -->
+   	<a  onclick="alert('正在努力上传，请耐心等候')" href="javascript:;" data-role="button">最新iPhone版下载</a>
    </div>
 </div>
 
